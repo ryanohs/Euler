@@ -134,9 +134,7 @@
 				.Select(x => x*(long) x)
 				.Sum();
 
-			var sumOf1to100 = Enumerable
-				.Range(1, 100)
-				.Sum();
+			var sumOf1to100 = 100*101/2; // sum [1..n] = (n)(n+1)/2
 
 			var squareOfSum = sumOf1to100*sumOf1to100;
 			var result = squareOfSum - sumOfSquares;
