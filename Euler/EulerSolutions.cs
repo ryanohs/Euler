@@ -129,13 +129,8 @@
 		[Test]
 		public void Problem6()
 		{
-			var sumOfSquares = Enumerable
-				.Range(1, 100)
-				.Select(x => x*(long) x)
-				.Sum();
-
+			var sumOfSquares = 100*101*201/6;  // sum(i^2) over [1..n] = ((n)(n+1)(2n+1))/6
 			var sumOf1to100 = 100*101/2; // sum [1..n] = (n)(n+1)/2
-
 			var squareOfSum = sumOf1to100*sumOf1to100;
 			var result = squareOfSum - sumOfSquares;
 
