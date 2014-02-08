@@ -1,0 +1,17 @@
+*.user
+*.vspscc
+*.vssscc
+*.suo
+*.bak
+*.resharper
+[Bb]uild/
+[Bb]in
+obj/
+[Rr]elease*/
+_ReSharper*/
+*.crunchproject.*
+*.crunchsolution.*
+[Pp]ackages/
+*.zip
+*.dotCover
+*.log*
