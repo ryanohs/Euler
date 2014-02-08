@@ -7,7 +7,7 @@ namespace Euler
 	{
 		public static IEnumerable<T> Traverse<T>(int rows, int cols, Func<int, int, T> generator)
 		{
-			var stripes = 2*Math.Max(rows+1, cols+1) - 1;
+			var stripes = rows + cols - 1;
 			for (int stripe = 1; stripe < stripes; stripe++)
 			{
 				for (int col = 1; col <= stripe; col++)
