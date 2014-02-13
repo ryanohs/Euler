@@ -239,14 +239,13 @@
 		[Test]
 		public void Problem10()
 		{
-			Stopwatch sw = Stopwatch.StartNew();
 			long sum = 0;
 			foreach (var prime in PrimeNumbers.Sequence_MemoryIntensive())
 			{
 				if (prime >= 2000000) break;
 				sum += prime;
 			}
-			Console.WriteLine(sw.ElapsedMilliseconds);
+
 			Expect(() => sum == 142913828922);
 		}
 	}

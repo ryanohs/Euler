@@ -1,6 +1,7 @@
 namespace Euler
 {
 	using System.Collections.Generic;
+	using System.Threading.Tasks;
 
 	public class PrimeNumbers
 	{
@@ -8,9 +9,9 @@ namespace Euler
 		{
 			yield return 2;
 			long i = 3;
-			while(true)
+			while (true)
 			{
-				if(FermatFactorization.IsPrime(i))
+				if (FermatFactorization.IsPrime(i))
 				{
 					yield return i;
 				}
@@ -24,18 +25,18 @@ namespace Euler
 			primes.Add(2);
 			yield return 2;
 			var i = 3;
-			while(true)
+			while (true)
 			{
-				bool isPrimeCandidate = true;
-				foreach (var knownPrime in primes)
-				{
-					if (i%knownPrime==0)
-					{
-						isPrimeCandidate = false;
-						break;
-					}
-				}
-				if(isPrimeCandidate)
+				var isPrimeCandidate = true;
+				Parallel.ForEach(primes, (n, state) =>
+				                         	{
+				                         		if (i%n == 0)
+				                         		{
+				                         			state.Stop();
+				                         			isPrimeCandidate = false;	// I'm not 100% sure I can actually set this after Stop() but it passed problems 7 & 10
+				                         		}
+				                         	});
+				if (isPrimeCandidate)
 				{
 					primes.Add(i);
 					yield return i;
