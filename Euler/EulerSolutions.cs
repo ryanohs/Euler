@@ -1,7 +1,6 @@
 ﻿namespace Euler
 {
 	using System;
-	using System.Diagnostics;
 	using System.Linq;
 	using ExpectEx.NUnit;
 	using NUnit.Framework;
@@ -67,7 +66,7 @@
 			long sum = 0;
 			foreach (var n in Fibonacci.Sequence())
 			{
-				if (n % 2 != 0) continue;
+				if (n%2 != 0) continue;
 				if (n > 4000000) break;
 				sum += n;
 			}
@@ -129,7 +128,7 @@
 		[Test]
 		public void Problem6()
 		{
-			var sumOfSquares = 100*101*201/6;  // sum(i^2) over [1..n] = ((n)(n+1)(2n+1))/6
+			var sumOfSquares = 100*101*201/6; // sum(i^2) over [1..n] = ((n)(n+1)(2n+1))/6
 			var sumOf1to100 = 100*101/2; // sum [1..n] = (n)(n+1)/2
 			var squareOfSum = sumOf1to100*sumOf1to100;
 			var result = squareOfSum - sumOfSquares;
@@ -184,9 +183,9 @@
 				.ToCharArray()
 				.Select(x => x - '0') // Convert ASCII code to int
 				.ToArray();
-			
+
 			var max = 0;
-			for(int i = 0; i < 995; i++)
+			for (int i = 0; i < 995; i++)
 			{
 				if (n[i + 4] == 0)
 				{
@@ -194,13 +193,39 @@
 					continue;
 				}
 				var product = n[i]*n[i + 1]*n[i + 2]*n[i + 3]*n[i + 4];
-				if(product > max)
+				if (product > max)
 				{
 					max = product;
 				}
 			}
 
 			Expect(() => max == 40824);
+		}
+
+		[Test]
+		public void Problem9()
+		{
+			// Brute force
+			int a, b, c;
+			for (a = 1; a < 998; a++)
+			{
+				for (b = 1; a + b < 999; b++)
+				{
+					for (c = 1; c < 998; c++)
+					{
+						if (a*a + b*b == c*c && a + b + c == 1000)
+						{
+							goto found;
+						}
+					}
+				}
+			}
+			throw new Exception("Not found");
+			found:
+			var product = a*b*c;
+			Console.WriteLine(new {a, b, c, product}.ToString());
+
+			Expect(() => product == 31875000);
 		}
 	}
 }
