@@ -1,6 +1,7 @@
 ﻿namespace Euler
 {
 	using System;
+	using System.Diagnostics;
 	using System.Linq;
 	using ExpectEx.NUnit;
 	using NUnit.Framework;
@@ -12,7 +13,7 @@
 		/// Find the sum of all the multiples of 3 or 5 below 1000.
 		/// </summary>
 		[Test]
-		public void Problem1()
+		public void Problem01()
 		{
 			var sum = Enumerable
 				.Range(1, 999)
@@ -23,7 +24,7 @@
 		}
 
 		[Test]
-		public void Problem1_Algebraic()
+		public void Problem01_Algebraic()
 		{
 			// This is about 10-15x faster than iterating and filtering
 			var sum = 0;
@@ -49,7 +50,7 @@
 		/// By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 		/// </summary>
 		[Test]
-		public void Problem2()
+		public void Problem02()
 		{
 			var sum = Fibonacci.Sequence()
 				.TakeWhile(n => n <= 4000000)
@@ -60,7 +61,7 @@
 		}
 
 		[Test]
-		public void Problem2_b()
+		public void Problem02_b()
 		{
 			// This is 3-400x faster than the LINQ solution
 			long sum = 0;
@@ -78,7 +79,7 @@
 		/// What is the largest prime factor of the number 600851475143 ?
 		/// </summary>
 		[Test]
-		public void Problem3()
+		public void Problem03()
 		{
 			var factors = FermatFactorization.Of(600851475143);
 
@@ -89,7 +90,7 @@
 		/// Find the largest palindrome made from the product of two 3-digit numbers.
 		/// </summary>
 		[Test]
-		public void Problem4()
+		public void Problem04()
 		{
 			/*
 					999	998	997	996
@@ -112,7 +113,7 @@
 		/// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 		/// </summary>
 		[Test]
-		public void Problem5()
+		public void Problem05()
 		{
 			var result = Enumerable
 				.Range(1, 20)
@@ -126,7 +127,7 @@
 		/// Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 		/// </summary>
 		[Test]
-		public void Problem6()
+		public void Problem06()
 		{
 			var sumOfSquares = 100*101*201/6; // sum(i^2) over [1..n] = ((n)(n+1)(2n+1))/6
 			var sumOf1to100 = 100*101/2; // sum [1..n] = (n)(n+1)/2
@@ -140,9 +141,9 @@
 		/// What is the 10,001st prime number?
 		/// </summary>
 		[Test]
-		public void Problem7()
+		public void Problem07()
 		{
-			var prime = PrimeNumbers.Sequence()
+			var prime = PrimeNumbers.Sequence_MemoryIntensive()
 				.Skip(10000)
 				.First();
 
@@ -153,7 +154,7 @@
 		/// Find the greatest product of five consecutive digits in the 1000-digit number.
 		/// </summary>
 		[Test]
-		public void Problem8()
+		public void Problem08()
 		{
 			// Sliding window approach
 			// If the window contains a 0 we can skip it. 398 of the 995 windows contain a zero.
@@ -202,8 +203,12 @@
 			Expect(() => max == 40824);
 		}
 
+		/// <summary>
+		/// There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+		/// Find the product abc.
+		/// </summary>
 		[Test]
-		public void Problem9()
+		public void Problem09()
 		{
 			// Brute force
 			int a, b, c;
@@ -226,6 +231,23 @@
 			Console.WriteLine(new {a, b, c, product}.ToString());
 
 			Expect(() => product == 31875000);
+		}
+
+		/// <summary>
+		/// Find the sum of all the primes below two million.
+		/// </summary>
+		[Test]
+		public void Problem10()
+		{
+			Stopwatch sw = Stopwatch.StartNew();
+			long sum = 0;
+			foreach (var prime in PrimeNumbers.Sequence_MemoryIntensive())
+			{
+				if (prime >= 2000000) break;
+				sum += prime;
+			}
+			Console.WriteLine(sw.ElapsedMilliseconds);
+			Expect(() => sum == 142913828922);
 		}
 	}
 }
